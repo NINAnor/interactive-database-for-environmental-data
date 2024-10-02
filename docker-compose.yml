@@ -1,17 +1,37 @@
 services:
   frontend:
+    profiles:
+      - prod
     build:
       context: .
       dockerfile: Dockerfile
 
+  frontend-dev:
+    hostname: frontend
+    profiles:
+      - dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: setup
+    command: npm run dev -- --host
+    volumes:
+      - ./client/src:/app/src
+    ports:
+      - "5173:5173"
+
   mock-server:
+    profiles:
+      - prod
     build:
       context: ./mock-server
       dockerfile: Dockerfile
 
   proxy:
+    profiles:
+      - prod
     build:
       context: ./proxy
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "8080:80"

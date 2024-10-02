@@ -1,15 +1,28 @@
 import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig } from 'vitest/config'
-import dotenv from 'dotenv'
+import { loadEnv } from 'vite'
 
-dotenv.config({ path: '.env.test' })
+export default ({ mode }) => {
+  const env = {...process.env, ...loadEnv(mode, process.cwd(), '')}
+  const extra = {}
 
-export default defineConfig({
-  plugins: [sveltekit()],
-  test: {
-    include: ['src/**/*.{test,spec}.{js,ts}']
-  },
-  build: {
-    chunkSizeWarningLimit: 4000
+  if (env.PROXY) {
+    extra['server'] = {
+      proxy: {
+        '/api': env.PROXY,
+        '/postgrest': env.PROXY,
+      }
+    }
   }
-})
+
+  return defineConfig({
+    ...extra,
+    plugins: [sveltekit()],
+    test: {
+      include: ['src/**/*.{test,spec}.{js,ts}']
+    },
+    build: {
+      chunkSizeWarningLimit: 4000
+    }
+  })
+}
