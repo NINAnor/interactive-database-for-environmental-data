@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20 as build-stage
+FROM node:20 as setup
 WORKDIR /app
 # Copy and install files into the container
 COPY client/package*.json ./
@@ -9,10 +9,14 @@ COPY client/. .
 ARG VITE_POSTGREST_URL="/postgrest"
 ARG VITE_AUTH_URL="/api"
 ARG VITE_UPLOAD_URL="/api"
+
+
+from setup as build-stage
 # Build the app
 RUN npm run build
 # Prune dev dependencies
 RUN npm prune --production
+
 
 # Production stage
 FROM nginx:stable-alpine as production-stage
