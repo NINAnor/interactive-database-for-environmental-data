@@ -8,15 +8,16 @@ import { get } from 'svelte/store'
  * @param {string} type - The type of feedback (error, info, success)
  * @param {string} code - The code of the feedback
  * @param {string} message - The message to display to the user
+ * @param {string} extra - Extra information, useful to give more context to validation issues
  */
-export function addFeedbackToStore (type, code, message) {
+export function addFeedbackToStore (type, code, message, extra = null) {
   // Dont add feedback if feedback with same code is already displayed
   if (get(userFeedbackStore).some(f => f.code === code)) {
     return
   }
 
   // Create a new feedback object
-  const feedback = new UserFeedback(type, code, message)
+  const feedback = new UserFeedback(type, code, message, extra)
 
   // Add the feedback to the store
   userFeedbackStore.update(currentFeedback => [...currentFeedback, feedback])

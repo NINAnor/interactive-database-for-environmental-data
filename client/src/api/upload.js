@@ -34,7 +34,20 @@ export async function uploadFileToServer (file) {
 
     // Check if the response is ok
     if (!response.ok) {
-      addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, FEEDBACK_MESSAGES.UPLOAD_REJECTED)
+      try {
+        // not ok responses could contain valid JSON
+        const result = await response.json();
+        console.error(result);
+        const { message } = result.error;
+        if (result.error.validation) {
+          addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, 'Validation Error', result.error)
+        } else {
+          addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, message);
+        }
+      } catch(e) {
+        console.error(e);
+        addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, FEEDBACK_MESSAGES.UPLOAD_REJECTED)
+      }
       return false
     }
 
