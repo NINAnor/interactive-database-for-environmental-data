@@ -28,7 +28,7 @@
       />
       <h3>{feedback.message}</h3>
       {#if feedback.extra}
-        <ul>
+        <ul style="max-height: 70vh; overflow-y: auto; width: 100%">
         {#each feedback.extra.validation as err}
           <li>
             <div><b>Sheet:</b> {feedback.extra.sheet}</div>
