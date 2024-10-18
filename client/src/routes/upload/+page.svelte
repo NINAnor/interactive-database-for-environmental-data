@@ -32,9 +32,9 @@
    */
   async function uploadFile () {
     // validate XLSX file
-    if (!(await parseAndValidateExcel(selectedFile))) {
-      return
-    }
+    // if (!(await parseAndValidateExcel(selectedFile))) {
+    //   return
+    // }
 
     // Upload file to server
     await uploadFileToServer(selectedFile).then((success) => {
