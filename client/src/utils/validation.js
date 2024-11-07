@@ -25,20 +25,22 @@ import { reportError } from './report.js'
  * @param {string} input - The input string to validate
  * @returns {boolean} - If the input is allowed or not
  */
-export function validateText (input) {
-  if (!input) {
-    return true
-  }
+export function validateText () {
+  return true
 
-  const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-_():+"%/*]+$/
+  // if (!input) {
+  //   return true
+  // }
 
-  const isTextValid = allowedPattern.test(input)
+  // const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-_():+"%/*]+$/
 
-  if (!isTextValid) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_TEXT)
-  }
+  // const isTextValid = allowedPattern.test(input)
 
-  return isTextValid
+  // if (!isTextValid) {
+  //   addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_TEXT)
+  // }
+
+  // return isTextValid
 }
 
 /**
