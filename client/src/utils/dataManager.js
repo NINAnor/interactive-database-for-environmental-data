@@ -310,7 +310,7 @@ export function getObservationsForRiver (river) {
   const stations = getStationsForRiver(river)
   let observations = []
   stations.forEach(station => {
-    observations = [...observations, ...station.observations]
+    observations = [...observations, ...(station.observations || [])]
   })
 
   return observations
