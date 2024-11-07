@@ -9,9 +9,17 @@ COPY client/. .
 ARG VITE_POSTGREST_URL="/postgrest"
 ARG VITE_AUTH_URL="/api"
 ARG VITE_UPLOAD_URL="/api"
+ARG VITE_SENTRY_DSN
+ARG VITE_SENTRY_ENV
+ARG SENTRY_AUTH_TOKEN
 
 
 from setup as build-stage
+
+ENV VITE_SENTRY_DSN=${VITE_SENTRY_DSN}
+ENV VITE_SENTRY_ENV=${VITE_SENTRY_ENV}
+ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
+
 # Build the app
 RUN npm run build
 # Prune dev dependencies
