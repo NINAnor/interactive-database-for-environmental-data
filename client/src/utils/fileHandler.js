@@ -11,6 +11,7 @@ import {
   formatRiversForCsv,
   formatStationsForCsv
 } from './formatData.js'
+import { reportError } from './report.js'
 
 /**
  * Generates an Excel file from the given data
@@ -58,6 +59,7 @@ export async function generateExcelFile (rivers, stations, type, selectedSpecies
     // Return the blob
     return blob
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.ERROR_GENERATING_FILE)
     // if error, return empty blob
     return new Blob()
@@ -90,6 +92,7 @@ export async function generateCSVFile (rivers, stations, type, selectedSpecies) 
     // Return the blob
     return blob
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.ERROR_GENERATING_FILE)
     return new Blob()
   }

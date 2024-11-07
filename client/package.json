@@ -41,6 +41,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sentry/sveltekit": "^8.37.1",
 		"exceljs": "4.4.0",
 		"leaflet": "1.9.4",
 		"plotly.js-dist-min": "2.30.1",

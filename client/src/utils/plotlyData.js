@@ -2,6 +2,7 @@ import { amountOfFishInObservations, secondsSpentFishingInStations } from './cal
 import { getObservationsForRiver, getStationsForRiver } from './dataManager.js'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages.js'
+import { reportError } from './report.js'
 
 /**
  * Creates data which can be used in a plotly bar or pie chart
@@ -48,6 +49,7 @@ export function dataForBarAndPieChart (
       )
     }
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.ERROR_PLOTTING_DATA)
     return new Map()
   }
@@ -209,6 +211,7 @@ export function dataForHistogramAndBoxplot (
       )
     }
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.ERROR_PLOTTING_DATA)
     return new Map()
   }

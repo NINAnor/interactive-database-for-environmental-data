@@ -18,6 +18,7 @@ import {
 } from '../constants/feedbackMessages.js'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { readFile, worksheetToJson } from './fileHandler.js'
+import { reportError } from './report.js'
 
 /**
  * Validate text using regex to whitelist specific characters
@@ -247,6 +248,7 @@ export async function parseAndValidateExcel (excelFile) {
     // If all sheets are validated, return true
     return true
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.GENERIC)
     return false
   }

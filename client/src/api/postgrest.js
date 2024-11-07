@@ -14,6 +14,7 @@ import {
 import { addFeedbackToStore } from '../utils/addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 import { authRefresh } from './auth.js'
+import { reportError } from '../utils/report.js'
 
 /**
  * Fetches data from the PostgREST API on the endpoint specified
@@ -33,6 +34,7 @@ async function fetchFromPostgrest (endpoint) {
     // Return the response
     return handleResponse(response)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }

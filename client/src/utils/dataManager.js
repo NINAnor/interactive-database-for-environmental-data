@@ -27,6 +27,7 @@ import {
   validateStationSummary,
   validateStationDownload
 } from './validation.js'
+import { reportError } from './report.js'
 
 /**
  * Updates a store with given objects converted to a given class
@@ -130,6 +131,7 @@ export async function getRivers () {
 
     updateStoreWithObjects(riverStore, fetchedRivers, River)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -154,6 +156,7 @@ export async function getStations () {
 
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -189,6 +192,7 @@ export async function getRiverSummary (id) {
 
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -213,6 +217,7 @@ export async function getStationSummary (id) {
 
     updateStoreWithObject(stationStore, fetchedStationsSummary[0], Station)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -248,6 +253,7 @@ export async function getRiverForDownload (id) {
 
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -281,6 +287,7 @@ export async function getStationForDownload (id) {
 
     updateStoreWithObject(stationStore, fetchedStations[0], Station)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }

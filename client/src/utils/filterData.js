@@ -1,6 +1,7 @@
 import attributesToFilterOn from '../constants/attributesToFilterOn'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
+import { reportError } from './report.js'
 
 /**
  * Filters a map of objects based on if a value given exists as a substring for two given attributes
@@ -133,6 +134,7 @@ export function filterRiversByDateAndSpecies (rivers, species, startDate, endDat
 
     return filteredSpeciesAndDateRivers
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
     return new Map()
   }
@@ -156,6 +158,7 @@ export function filterStationsByDateAndSpecies (stations, species, startDate, en
 
     return filteredSpeciesAndDateStations
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
     return new Map()
   }
@@ -172,6 +175,7 @@ export function filterObservationsBySpecies (observations, species) {
     // Filter observations based on if they have a species that is in the species list
     return filterDataBasedOnAttributeInList(observations, attributesToFilterOn.SPECIES, species)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
     return []
   }
@@ -193,6 +197,7 @@ export function getSelectableSpecies (observationPoints) {
 
     return Array.from(speciesSet)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
     return []
   }
@@ -209,6 +214,7 @@ export function filterRiversByNameAndDateCombined (rivers, searchQuery) {
     // Filters rivers based on if the searchQuery is a substring of their name and date combined
     return filterDataBasedOnAttributeCombinationSubstring(rivers, [attributesToFilterOn.RIVER_NAME, attributesToFilterOn.RIVER_START_DATE], searchQuery)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
     return new Map()
   }
@@ -225,6 +231,7 @@ export function filterStationsByNameAndDateCombined (stations, searchQuery) {
     // Filters stations based on if the searchQuery is a substring of their name and date combined
     return filterDataBasedOnAttributeCombinationSubstring(stations, [attributesToFilterOn.STATION_NAME, attributesToFilterOn.STATION_DATE], searchQuery)
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
     return new Map()
   }
@@ -243,6 +250,7 @@ export function filtersStationsByRiver (river, stations) {
     // For each stationId in the river, get the station from the station store and add it to the map to return
     return new Map(river.stations.map(stationId => [stationId, stations.get(stationId)]))
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
     return new Map()
   }

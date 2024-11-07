@@ -3,6 +3,7 @@ import { stationStore } from '../stores/stationStore'
 import { get } from 'svelte/store'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
+import { reportError } from './report.js'
 
 /**
  * Check if the store contains any data, and if it contains any data,
@@ -23,6 +24,7 @@ function doesDataInStoreExist (store) {
     // if the first object in the store does not have species, return false
     return get(store).values().next().value.species !== null
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
     return false
   }
@@ -70,6 +72,7 @@ function checkIfObjectHasProperty (store, key, prop) {
     // If the object does not have the property defined, return false
     return data[prop] !== null
   } catch (error) {
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
     return false
   }

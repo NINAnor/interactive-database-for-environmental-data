@@ -5,6 +5,7 @@ import {
 import { addFeedbackToStore } from '../utils/addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 import { authRefresh } from './auth.js'
+import { reportError } from '../utils/report.js'
 
 /**
  * Upload file to server
@@ -44,8 +45,8 @@ export async function uploadFileToServer (file) {
         } else {
           addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, message);
         }
-      } catch(e) {
-        console.error(e);
+      } catch (e) {
+        reportError(e)
         addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, FEEDBACK_MESSAGES.UPLOAD_REJECTED)
       }
       return false
@@ -62,6 +63,7 @@ export async function uploadFileToServer (file) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, FEEDBACK_MESSAGES.UPLOAD_REJECTED)
     return false
   } catch (error) { // Catch any possible network or fetch errors
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_UNAVAILABLE, FEEDBACK_MESSAGES.UPLOAD_UNAVAILABLE)
     return false
   }

@@ -7,6 +7,7 @@ import {
 import { addFeedbackToStore } from '../utils/addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 import { authStore } from '../stores/authStore.js'
+import { reportError } from '../utils/report.js'
 
 /**
  * Log in user to server
@@ -36,6 +37,7 @@ export async function authLogin (username, password) {
     authStore.set({ authenticated: true })
     return true
   } catch (error) { // Catch any possible network or fetch errors
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.AUTH_UNAVAILABLE, FEEDBACK_MESSAGES.AUTH_UNAVAILABLE)
     return false
   }
@@ -65,6 +67,7 @@ export async function authLogout () {
     authStore.set({ authenticated: false })
     return true
   } catch (error) { // Catch any possible network or fetch errors
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.AUTH_UNAVAILABLE, FEEDBACK_MESSAGES.AUTH_UNAVAILABLE)
     return false
   }
@@ -95,6 +98,7 @@ export async function authRefresh () {
     authStore.set({ authenticated: true })
     return true
   } catch (error) { // Catch any possible network or fetch errors
+    reportError(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.AUTH_UNAVAILABLE, FEEDBACK_MESSAGES.AUTH_UNAVAILABLE)
     return false
   }
