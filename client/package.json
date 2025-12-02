@@ -45,6 +45,6 @@
 		"exceljs": "4.4.0",
 		"leaflet": "1.9.4",
 		"plotly.js-dist-min": "2.30.1",
-		"validator": "13.11.0"
+		"validator": "13.15.22"
 	}
 }
