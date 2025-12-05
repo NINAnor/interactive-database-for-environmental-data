@@ -12,6 +12,8 @@ jobs:
 
     - name: Checkout Repository
       uses: actions/checkout@v4
+      with:
+        persist-credentials: false
 
     - name: Set up SSH key
       run: |
